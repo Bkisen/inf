@@ -1,0 +1,6 @@
+s = 12
+x =[1,2,22,8,4,5,6]
+for i in x:
+    if  s - i in x:
+        print(i,s-i)
+        exit(0)
