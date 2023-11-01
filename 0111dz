@@ -1,0 +1,82 @@
+class city():
+    def __init__(self, cityn, initials):
+        self.cityn = cityn
+        self.cityform = self.form(cityn, initials)
+        
+    def form(self, cityn, initials):
+        city = {}
+        for name in cityn:
+            city[name] = {}
+        
+        city.update(initials)
+        
+        for name, values in city.items():
+            for nearby, value in values.items():
+                if city[nearby].get(name, False) == False:
+                    city[nearby][name] = value
+                    
+        return city
+    
+    def get_cityn(self):
+        return self.cityn
+    def value(self, city1, city2):
+        return self.cityform[city1][city2]
+
+    def get_neighbors(self, name):
+        roads = []
+        for out_road in self.cityn:
+            if self.cityform[name].get(out_road, False) != False:
+                roads.append(out_road)
+        return roads
+    
+def main(city, startcity):
+    shortestpath = {}
+    memo = {}
+    unvcity = list(city.get_cityn())
+    infinity = float('inf')
+
+    for i in unvcity:
+        shortestpath[i] = infinity
+    shortestpath[startcity] = 0
+    
+    while unvcity:
+        currentmin = None
+        for i in unvcity:
+            if currentmin == None:
+                currentmin = i
+            elif shortestpath[i] < shortestpath[currentmin]:
+                currentmin = i
+                
+        neighbors = city.get_neighbors(currentmin)
+        for neighbor in neighbors:
+            nn = shortestpath[currentmin] + city.value(currentmin, neighbor)
+            if nn < shortestpath[neighbor]:
+                shortestpath[neighbor] = nn
+                memo[neighbor] = currentmin
+        unvcity.remove(currentmin)
+    return memo, shortestpath
+
+def print_result(a, b, start, target):
+    # path = []
+    # k = target   
+    # while k != start:
+    #     path.append(k)
+    #     k = a[k]
+    # path.append(start)
+    
+    print("min {}.".format(b[target]))
+    # print(" -> ".join(reversed(path)))
+
+cities = ['city1', 'city2', 'city3']
+smth = {}
+for i in cities:
+    smth[i] = {}
+    
+smth["city1"]['city2'] = 1
+smth["city3"]['city2'] = 1
+
+city = city(cities, smth)
+
+a, b = main(city=city, startcity="city1")
+
+print_result(a, b, start="city1", target="city3")
