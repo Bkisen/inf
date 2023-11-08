@@ -1,0 +1,21 @@
+cout = 0
+n = 0
+while True:
+    n += 1
+    new = bin(n)[2:]
+    for i in new:
+        if i ==0:
+            cout += 1
+        else:
+            new = new[cout:]
+            break
+    if len(new) % 2 == 0:
+        new = new[(len(new)//2):] + '1' + new[:(len(new)//2)]
+    else:
+        pass
+    print(new)
+    print(n)
+    if int(new, base = 2) <= 26:
+        pass
+    else:
+        break
