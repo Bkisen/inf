@@ -1,0 +1,16 @@
+file = (open('24-s2.txt').readline())
+d = {}
+m = -100
+for i in range(len(file)-1):
+    if file[i] == 'A':
+        if file[i+1] not in d:
+            d[file[i+1]] = 1
+        else:
+            d[file[i+1]] += 1
+for j in d:
+    a =  d[j]
+    if a > m:
+        m = a
+        k = j
+print(k, m, sep = '')
+# L1567
